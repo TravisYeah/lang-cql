@@ -2,7 +2,7 @@
 
 # @codemirror/lang-cql
 
-[ [**WEBSITE**](https://codemirror.net/6/) | [**ISSUES**](https://github.com/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/c/next/) | [**CHANGELOG**](https://github.com/TravisYeah/lang-r/CHANGELOG.md) ]
+[ [**WEBSITE**](https://codemirror.net/6/) | [**ISSUES**](https://github.com/codemirror/dev/issues) | [**FORUM**](https://discuss.codemirror.net/c/next/) | [**CHANGELOG**](https://github.com/TravisYeah/lang-cql/CHANGELOG.md) ]
 
 This package implements CQL language support for the
 [CodeMirror](https://codemirror.net/6/) code editor.
