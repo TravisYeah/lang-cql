@@ -28,7 +28,7 @@ to communication around the project.
 <dd><p>CQL language support.</p>
 </dd>
 <dt id="user-content-cqllanguage">
-  <code><strong><a href="#user-content-cqllanguage">rLanguage</a></strong>: <a href="https://codemirror.net/docs/ref#language.LezerLanguage">LezerLanguage</a></code></dt>
+  <code><strong><a href="#user-content-cqllanguage">cqlLanguage</a></strong>: <a href="https://codemirror.net/docs/ref#language.LezerLanguage">LezerLanguage</a></code></dt>
 
 <dd><p>A language provider based on the <a href="https://github.com/TravisYeah/lezer-cql">Lezer CQL
 parser</a>, extended with
