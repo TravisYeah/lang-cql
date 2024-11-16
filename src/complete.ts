@@ -1,8 +1,11 @@
 import {
   completeFromList,
+  Completion,
   CompletionSource,
   ifIn,
+  insertCompletionText,
 } from "@codemirror/autocomplete";
+import { EditorView } from "@codemirror/view";
 
 export const cqlKeywordCompletionSource = (): CompletionSource => {
   return ifIn(
@@ -20,50 +23,71 @@ export const cqlKeywordCompletionSource = (): CompletionSource => {
   );
 };
 
+function applyFunctionCompletion(
+  view: EditorView,
+  completion: Completion,
+  from: number,
+  to: number,
+) {
+  const text = completion.label + "()";
+  const pos = text.length - 1;
+  view.dispatch(insertCompletionText(view.state, text, from, to));
+  view.dispatch({
+    selection: { anchor: pos, head: pos },
+  });
+}
+
+function createFunctionCompetion(label: string): Completion {
+  return {
+    label,
+    type: "function",
+    apply: applyFunctionCompletion,
+  };
+}
+
+const functionCompletionList: Completion[] = [
+  "T_AFTER",
+  "T_BEFORE",
+  "T_CONTAINS",
+  "T_DISJOINT",
+  "T_DURING",
+  "T_EQUALS",
+  "T_FINISHEDBY",
+  "T_FINISHES",
+  "T_INTERSECTS",
+  "T_MEETS",
+  "T_METBY",
+  "T_OVERLAPPEDBY",
+  "T_OVERLAPS",
+  "T_STARTEDBY",
+  "T_STARTS",
+  "S_INTERSECTS",
+  "S_EQUALS",
+  "S_DISJOINT",
+  "S_TOUCHES",
+  "S_WITHIN",
+  "S_OVERLAPS",
+  "S_CROSSES",
+  "S_CONTAINS",
+  "A_EQUALS",
+  "A_CONTAINS",
+  "A_CONTAINEDBY",
+  "A_OVERLAPS",
+  "CASEI",
+  "ACCENTI",
+  "DATE",
+  "TIMSTAMP",
+  "INTERVAL",
+  "POINT",
+  "LINESTRING",
+  "POLYGON",
+  "MULTIPOINT",
+  "MULTILINESTRING",
+  "MULTIPOLYGON",
+  "GEOMETRYCOLLECTION",
+  "BBOX",
+].map(createFunctionCompetion);
+
 export const cqlBuiltinFunctionCompletionSource = (): CompletionSource => {
-  return ifIn(
-    ["Identifier"],
-    completeFromList([
-      { label: "T_AFTER", type: "function" },
-      { label: "T_BEFORE", type: "function" },
-      { label: "T_CONTAINS", type: "function" },
-      { label: "T_DISJOINT", type: "function" },
-      { label: "T_DURING", type: "function" },
-      { label: "T_EQUALS", type: "function" },
-      { label: "T_FINISHEDBY", type: "function" },
-      { label: "T_FINISHES", type: "function" },
-      { label: "T_INTERSECTS", type: "function" },
-      { label: "T_MEETS", type: "function" },
-      { label: "T_METBY", type: "function" },
-      { label: "T_OVERLAPPEDBY", type: "function" },
-      { label: "T_OVERLAPS", type: "function" },
-      { label: "T_STARTEDBY", type: "function" },
-      { label: "T_STARTS", type: "function" },
-      { label: "S_INTERSECTS", type: "function" },
-      { label: "S_EQUALS", type: "function" },
-      { label: "S_DISJOINT", type: "function" },
-      { label: "S_TOUCHES", type: "function" },
-      { label: "S_WITHIN", type: "function" },
-      { label: "S_OVERLAPS", type: "function" },
-      { label: "S_CROSSES", type: "function" },
-      { label: "S_CONTAINS", type: "function" },
-      { label: "A_EQUALS", type: "function" },
-      { label: "A_CONTAINS", type: "function" },
-      { label: "A_CONTAINEDBY", type: "function" },
-      { label: "A_OVERLAPS", type: "function" },
-      { label: "CASEI", type: "function" },
-      { label: "ACCENTI", type: "function" },
-      { label: "DATE", type: "function" },
-      { label: "TIMSTAMP", type: "function" },
-      { label: "INTERVAL", type: "function" },
-      { label: "POINT", type: "function" },
-      { label: "LINESTRING", type: "function" },
-      { label: "POLYGON", type: "function" },
-      { label: "MULTIPOINT", type: "function" },
-      { label: "MULTILINESTRING", type: "function" },
-      { label: "MULTIPOLYGON", type: "function" },
-      { label: "GEOMETRYCOLLECTION", type: "function" },
-      { label: "BBOX", type: "function" },
-    ]),
-  );
+  return ifIn(["Identifier"], completeFromList(functionCompletionList));
 };
