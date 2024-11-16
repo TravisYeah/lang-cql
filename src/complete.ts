@@ -11,14 +11,14 @@ export const cqlKeywordCompletionSource = (): CompletionSource => {
   return ifIn(
     ["BinaryComparisonPredicate", "BooleanExpression"],
     completeFromList([
-      { label: "and", type: "keyword" },
-      { label: "or", type: "keyword" },
-      { label: "not", type: "keyword" },
-      { label: "like", type: "keyword" },
-      { label: "between", type: "keyword" },
-      { label: "is", type: "keyword" },
-      { label: "in", type: "keyword" },
-      { label: "null", type: "keyword" },
+      { displayLabel: "and", label: "and ", type: "keyword" },
+      { displayLabel: "or", label: "or ", type: "keyword" },
+      { displayLabel: "not", label: "not ", type: "keyword" },
+      { displayLabel: "like", label: "like ", type: "keyword" },
+      { displayLabel: "between", label: "between ", type: "keyword" },
+      { displayLabel: "is", label: "is ", type: "keyword" },
+      { displayLabel: "in", label: "in ", type: "keyword" },
+      { label: "null", type: "constant" },
     ]),
   );
 };
