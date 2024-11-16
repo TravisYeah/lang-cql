@@ -18,7 +18,17 @@ export const cqlKeywordCompletionSource = (): CompletionSource => {
       { displayLabel: "between", label: "between ", type: "keyword" },
       { displayLabel: "is", label: "is ", type: "keyword" },
       { displayLabel: "in", label: "in ", type: "keyword" },
+    ]),
+  );
+};
+
+export const cqlConstantCompletionSource = (): CompletionSource => {
+  return ifIn(
+    ["BinaryComparisonPredicate", "BooleanExpression"],
+    completeFromList([
       { label: "null", type: "constant" },
+      { label: "true", type: "constant" },
+      { label: "false", type: "constant" },
     ]),
   );
 };

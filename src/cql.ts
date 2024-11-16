@@ -3,11 +3,13 @@ import { LRLanguage, LanguageSupport } from "@codemirror/language";
 import {
   cqlKeywordCompletionSource,
   cqlBuiltinFunctionCompletionSource,
+  cqlConstantCompletionSource,
 } from "./complete";
 
 export function cql() {
   const extensions = [
     cqlKeywordCompletionExtension,
+    cqlConstantCompletionExtension,
     cqlBuiltinFunctionCompletionExtension,
   ];
   return new LanguageSupport(cqlLanguage, extensions);
@@ -22,6 +24,10 @@ export const cqlLanguage = LRLanguage.define({
 
 const cqlKeywordCompletionExtension = cqlLanguage.data.of({
   autocomplete: cqlKeywordCompletionSource(),
+});
+
+const cqlConstantCompletionExtension = cqlLanguage.data.of({
+  autocomplete: cqlConstantCompletionSource(),
 });
 
 const cqlBuiltinFunctionCompletionExtension = cqlLanguage.data.of({
