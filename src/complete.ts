@@ -40,7 +40,7 @@ function applyFunctionCompletion(
   to: number,
 ) {
   const text = completion.label + "()";
-  const pos = text.length - 1;
+  const pos = from + text.length - 1;
   view.dispatch(insertCompletionText(view.state, text, from, to));
   view.dispatch({
     selection: { anchor: pos, head: pos },
