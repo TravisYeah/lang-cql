@@ -27,6 +27,7 @@ export const cqlConstantCompletionSource = (): CompletionSource => {
     ["BinaryComparisonPredicate", "BooleanExpression"],
     completeFromList([
       { label: "null", type: "constant" },
+      { label: "EMPTY", type: "constant" },
       { label: "true", type: "constant" },
       { label: "false", type: "constant" },
     ]),
