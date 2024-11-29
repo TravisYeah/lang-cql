@@ -39,6 +39,30 @@ export const cqlDateInstanceCompletionSource = (): CompletionSource => {
   );
 };
 
+export const cqlTimestampInstanceCompletionSource = (): CompletionSource => {
+  return ifIn(
+    ["TimestampInstantString"],
+    (context: CompletionContext) => {
+      const dateStrStart = reverseFind(context.state.sliceDoc(0, context.pos), "'") + 1
+      const curStr = context.state.sliceDoc(dateStrStart, context.pos)
+      const offset = context.pos - dateStrStart
+      const dateStrEnd = context.pos + context.state.sliceDoc(context.pos).indexOf("'")
+      const completionTemplate = "1000-01-01T00:00:00Z"
+      let completionText = curStr + completionTemplate.substring(offset)
+      const completionEndTemplate = "1000-01-01T23:59:59Z"
+      let completionEndText = curStr + completionEndTemplate.substring(offset)
+      const completionResult: CompletionResult = ({
+        from: dateStrStart, to: dateStrEnd, options: [{
+          label: completionText, type: "constant",
+        }, {
+          label: completionEndText, type: "constant",
+        }]
+      })
+      return completionResult
+    }
+  );
+};
+
 export const cqlKeywordCompletionSource = (): CompletionSource => {
   return ifIn(
     ["BinaryComparisonPredicate", "BooleanExpression"],
