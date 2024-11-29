@@ -4,6 +4,7 @@ import {
   cqlKeywordCompletionSource,
   cqlBuiltinFunctionCompletionSource,
   cqlConstantCompletionSource,
+  cqlDateInstanceCompletionSource,
 } from "./complete";
 
 export function cql() {
@@ -11,6 +12,7 @@ export function cql() {
     cqlKeywordCompletionExtension,
     cqlConstantCompletionExtension,
     cqlBuiltinFunctionCompletionExtension,
+    cqlDateInstanceCompletionExtension
   ];
   return new LanguageSupport(cqlLanguage, extensions);
 }
@@ -32,4 +34,8 @@ const cqlConstantCompletionExtension = cqlLanguage.data.of({
 
 const cqlBuiltinFunctionCompletionExtension = cqlLanguage.data.of({
   autocomplete: cqlBuiltinFunctionCompletionSource(),
+});
+
+const cqlDateInstanceCompletionExtension = cqlLanguage.data.of({
+  autocomplete: cqlDateInstanceCompletionSource(),
 });

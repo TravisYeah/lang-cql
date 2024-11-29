@@ -1,11 +1,43 @@
 import {
   completeFromList,
   Completion,
+  CompletionContext,
+  CompletionResult,
   CompletionSource,
   ifIn,
   insertCompletionText,
 } from "@codemirror/autocomplete";
 import { EditorView } from "@codemirror/view";
+
+function reverseFind(text: string, char: string): number {
+  let i = text.length
+  while (i > 0) {
+    if (text[i] === char) {
+      return i
+    }
+    i--
+  }
+  return -1
+}
+
+export const cqlDateInstanceCompletionSource = (): CompletionSource => {
+  return ifIn(
+    ["DateInstantString"],
+    (context: CompletionContext) => {
+      const dateStrStart = reverseFind(context.state.sliceDoc(0, context.pos), "'") + 1
+      const curStr = context.state.sliceDoc(dateStrStart, context.pos)
+      const offset = context.pos - dateStrStart
+      const completionTemplate = "1000-01-01"
+      let completionText = curStr + completionTemplate.substring(offset)
+      const completionResult: CompletionResult = ({
+        from: dateStrStart, options: [{
+          label: completionText, type: "constant",
+        }]
+      })
+      return completionResult
+    }
+  );
+};
 
 export const cqlKeywordCompletionSource = (): CompletionSource => {
   return ifIn(
