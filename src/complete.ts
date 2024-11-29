@@ -119,7 +119,7 @@ const functionCompletionList: Completion[] = [
   "CASEI",
   "ACCENTI",
   "DATE",
-  "TIMSTAMP",
+  "TIMESTAMP",
   "INTERVAL",
   "POINT",
   "LINESTRING",
