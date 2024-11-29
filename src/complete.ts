@@ -27,12 +27,22 @@ export const cqlDateInstanceCompletionSource = (): CompletionSource => {
       const dateStrStart = reverseFind(context.state.sliceDoc(0, context.pos), "'") + 1
       const curStr = context.state.sliceDoc(dateStrStart, context.pos)
       const offset = context.pos - dateStrStart
+      const dateStrEnd = context.pos + context.state.sliceDoc(context.pos).indexOf("'")
       const completionTemplate = "1000-01-01"
       let completionText = curStr + completionTemplate.substring(offset)
+      const options: Completion[] = []
+      if (dateStrEnd !== context.pos) {
+        options.push(
+          {
+            label: context.state.sliceDoc(dateStrStart, dateStrEnd), type: "constant",
+          }
+        )
+      }
+      options.push({
+        label: completionText, type: "constant",
+      })
       const completionResult: CompletionResult = ({
-        from: dateStrStart, options: [{
-          label: completionText, type: "constant",
-        }]
+        from: dateStrStart, to: dateStrEnd, options
       })
       return completionResult
     }
