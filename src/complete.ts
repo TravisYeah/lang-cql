@@ -27,7 +27,11 @@ export const cqlDateInstanceCompletionSource = (): CompletionSource => {
       const dateStrStart = reverseFind(context.state.sliceDoc(0, context.pos), "'") + 1
       const curStr = context.state.sliceDoc(dateStrStart, context.pos)
       const offset = context.pos - dateStrStart
-      const dateStrEnd = context.pos + context.state.sliceDoc(context.pos).indexOf("'")
+      const quoteEnd = context.state.sliceDoc(context.pos).indexOf("'")
+      if (quoteEnd === -1) {
+        return null
+      }
+      const dateStrEnd = context.pos + quoteEnd
       const completionTemplate = "1000-01-01"
       let completionText = curStr + completionTemplate.substring(offset)
       const options: Completion[] = []
@@ -56,7 +60,11 @@ export const cqlTimestampInstanceCompletionSource = (): CompletionSource => {
       const dateStrStart = reverseFind(context.state.sliceDoc(0, context.pos), "'") + 1
       const curStr = context.state.sliceDoc(dateStrStart, context.pos)
       const offset = context.pos - dateStrStart
-      const dateStrEnd = context.pos + context.state.sliceDoc(context.pos).indexOf("'")
+      const quoteEnd = context.state.sliceDoc(context.pos).indexOf("'")
+      if (quoteEnd === -1) {
+        return null
+      }
+      const dateStrEnd = context.pos + quoteEnd
       const completionTemplate = "1000-01-01T00:00:00Z"
       let completionText = curStr + completionTemplate.substring(offset)
       const completionEndTemplate = "1000-01-01T23:59:59Z"
