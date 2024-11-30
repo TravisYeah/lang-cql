@@ -61,12 +61,18 @@ export const cqlTimestampInstanceCompletionSource = (): CompletionSource => {
       let completionText = curStr + completionTemplate.substring(offset)
       const completionEndTemplate = "1000-01-01T23:59:59Z"
       let completionEndText = curStr + completionEndTemplate.substring(offset)
+      const options: Completion[] = []
+      if (dateStrEnd !== context.pos) {
+        options.push(
+          {
+            label: context.state.sliceDoc(dateStrStart, dateStrEnd), type: "constant",
+          }
+        )
+      }
+      options.push({ label: completionText, type: "constant" })
+      options.push({ label: completionEndText, type: "constant" })
       const completionResult: CompletionResult = ({
-        from: dateStrStart, to: dateStrEnd, options: [{
-          label: completionText, type: "constant",
-        }, {
-          label: completionEndText, type: "constant",
-        }]
+        from: dateStrStart, to: dateStrEnd, options
       })
       return completionResult
     }
