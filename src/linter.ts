@@ -30,6 +30,15 @@ export const cqlLinterExtension = linter(view => {
           message: "Expecting two spatial expression arguments.",
         })
       }
+    } else if (node.name === "ArrayPredicate") {
+      if (!isType(arg1, "ArrayOperand") || !isType(arg2, "ArrayOperand")) {
+        diagnostics.push({
+          from: node.from,
+          to: node.to,
+          severity: "error",
+          message: "Expecting two array expression arguments.",
+        })
+      }
     }
   })
   return diagnostics
