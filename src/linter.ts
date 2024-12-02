@@ -2,24 +2,32 @@ import { syntaxTree } from "@codemirror/language"
 import { linter, Diagnostic } from "@codemirror/lint"
 import { SyntaxNode } from "@lezer/common"
 
-function isTemporalExpression(arg: SyntaxNode | null | undefined): boolean {
-  return arg?.name === "TemporalExpression"
+function isType(arg: SyntaxNode | null | undefined, type: string): boolean {
+  return arg?.name === type
 }
 
 export const cqlLinterExtension = linter(view => {
   let diagnostics: Diagnostic[] = []
   syntaxTree(view.state).cursor().iterate(node => {
-    console.log(node.name)
+    const functionName = node.node.firstChild
+    const arg1 = functionName?.nextSibling
+    const arg2 = arg1?.nextSibling
     if (node.name === "TemporalPredicate") {
-      const functionName = node.node.firstChild
-      const arg1 = functionName?.nextSibling
-      const arg2 = arg1?.nextSibling
-      if (!isTemporalExpression(arg1) || !isTemporalExpression(arg2)) {
+      if (!isType(arg1, "TemporalExpression") || !isType(arg2, "TemporalExpression")) {
         diagnostics.push({
           from: node.from,
           to: node.to,
           severity: "error",
           message: "Expecting two temporal expression arguments.",
+        })
+      }
+    } else if (node.name === "SpatialPredicate") {
+      if (!isType(arg1, "GeomExpression") || !isType(arg2, "GeomExpression")) {
+        diagnostics.push({
+          from: node.from,
+          to: node.to,
+          severity: "error",
+          message: "Expecting two spatial expression arguments.",
         })
       }
     }
