@@ -7,6 +7,7 @@ import {
   cqlDateInstanceCompletionSource,
   cqlTimestampInstanceCompletionSource,
 } from "./complete";
+import { cqlLinterExtension } from "./linter";
 
 export function cql() {
   const extensions = [
@@ -14,7 +15,8 @@ export function cql() {
     cqlConstantCompletionExtension,
     cqlBuiltinFunctionCompletionExtension,
     cqlDateInstanceCompletionExtension,
-    cqlTimestampInstanceCompletionExtension
+    cqlTimestampInstanceCompletionExtension,
+    cqlLinterExtension
   ];
   return new LanguageSupport(cqlLanguage, extensions);
 }
