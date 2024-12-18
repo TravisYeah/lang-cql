@@ -48,3 +48,7 @@ const cqlTimestampInstanceCompletionExtension = cqlLanguage.data.of({
   autocomplete: cqlTimestampInstanceCompletionSource(),
 });
 
+export {
+  cqlIdentifierCompletionSource,
+  cqlFunctionCompletionSource,
+} from "./complete";

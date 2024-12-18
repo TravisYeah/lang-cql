@@ -1,6 +1,6 @@
 {
   "name": "codemirror-lang-cql",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "CQL language support for the CodeMirror code editor",
   "scripts": {
     "build": "cm-buildhelper src/cql.ts",

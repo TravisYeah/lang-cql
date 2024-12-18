@@ -182,3 +182,23 @@ const functionCompletionList: Completion[] = [
 export const cqlBuiltinFunctionCompletionSource = (): CompletionSource => {
   return ifIn(["Identifier"], completeFromList(functionCompletionList));
 };
+
+export const cqlFunctionCompletionSource = (
+  fns: string[],
+): CompletionSource => {
+  return ifIn(
+    ["Identifier"],
+    completeFromList(fns.map(createFunctionCompetion)),
+  );
+};
+
+export const cqlIdentifierCompletionSource = (
+  identifiers: string[],
+): CompletionSource => {
+  return ifIn(
+    ["Identifier"],
+    completeFromList(
+      identifiers.map((id) => ({ label: id, type: "variable" })),
+    ),
+  );
+};
